@@ -21,7 +21,10 @@ class DictDetector:
             self._language[f.split('.')[0]] = set(file.read().split('\n')) # using set for faster lookup
 
         self._top_languages = json.load(open(os.path.join(self.DATA_PATH, 'top_languages.json'), 'r'))
-
+        
+        # sort the top languages by popularity
+        self._top_languages = [lang for lang, _ in sorted(self._top_languages.items(), key=lambda x: x[1], reverse=True)]
+     
     def detect(self, string: str) -> list:
         """Detect the language of a string
 
@@ -57,4 +60,12 @@ class DictDetector:
         
         # sort the result by score
         result = sorted(result, key=lambda x: x[1], reverse=True)
+        
+        # sort equal scores by the top languages
+        # [('fr', 1.0), ('ro', 0.5), ('en', 0.5), ('ca', 0.25), ('es', 0.25)]
+        # becomes
+        # [('fr', 1.0), ('en', 0.5), ('ro', 0.5), ('es', 0.25), ('ca', 0.25)]
+        
+        result = sorted(result, key=lambda x: (x[1], -self._top_languages.index(x[0]) if x[0] 
+                                               in self._top_languages else -len(self._top_languages)), reverse=True)
         return result
