@@ -1,2 +1,1 @@
-def hello() -> str:
-    return "Hello from short-language-detection!"
+from .detector import Detector
