@@ -1,3 +1,7 @@
+""" 
+Abstract class for language detection
+"""
+
 from abc import ABC, abstractmethod
 from typing import List, Tuple
 
