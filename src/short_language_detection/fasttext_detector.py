@@ -41,4 +41,6 @@ class FastTextDetector(AbstractDetector):
 
     @property
     def supported_languages(self):
-        return []
+        return [
+            label[9:] for label in self._model.get_labels()
+        ]  # Remove the "__label__" prefix
