@@ -28,8 +28,8 @@ class LinguaDetector(AbstractDetector):
         for lingua_output in lingua_detection:
             result.append(
                 (
-                    lingua_output[0].iso_code_639_1.name.lower(),
-                    round(lingua_output[1], 2),
+                    lingua_output.language.iso_code_639_1.name.lower(),
+                    round(lingua_output.value, 2),
                 )
             )
 
@@ -37,4 +37,4 @@ class LinguaDetector(AbstractDetector):
 
     @property
     def supported_languages(self):
-        return [lang.iso_code_639_1.name.lower() for lang in Language]
+        return [lang.iso_code_639_1.name.lower() for lang in Language.all()]
