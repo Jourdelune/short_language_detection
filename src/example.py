@@ -6,4 +6,4 @@ predictor = sld.Detector()
 print(f"supported languages: {len(predictor.supported_languages)}")
 
 # Detect the language of a text
-print(predictor.detect("no"))
+print(predictor.detect("no")[0])
