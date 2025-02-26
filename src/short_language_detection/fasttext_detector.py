@@ -6,7 +6,7 @@ import os
 
 import fasttext
 
-from .constants import ISO_639_1, WEIGHTS_PATH
+from .constants import LANGUAGES, WEIGHTS_PATH
 from .detector import AbstractDetector
 
 fasttext.FastText.eprint = lambda x: None
@@ -45,4 +45,8 @@ class FastTextDetector(AbstractDetector):
         ]  # Remove the "__label__" prefix
 
         # filter out unsupported languages
-        return [lang for lang in languages if lang.upper() in ISO_639_1.all()]
+        return [
+            lang
+            for lang in languages
+            if lang.upper() in LANGUAGES.all_iso_codes_639_1()
+        ]
