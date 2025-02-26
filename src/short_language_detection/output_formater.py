@@ -98,15 +98,3 @@ class Output:
             )
 
         return tuple(results)
-
-    def __iter__(self):
-        return iter(self.predictions)
-
-    def __getitem__(self, i):
-        return self.predictions[i]
-
-    def __str__(self):
-        return str(self.predictions)
-
-    def __repr__(self):
-        return f"Output(predictions={self.predictions}, reliability_threshold={self._reliability_threshold}, filter_threshold={self._filter_threshold})"

@@ -103,7 +103,7 @@ class Detector:
             if predictions[0][0][1] == 1:
                 return Output(
                     predictions[0], self._reliability_threshold, self._filter_threshold
-                )
+                ).predictions
 
         scores = {}
         for prediction in predictions:
@@ -120,7 +120,9 @@ class Detector:
         # convert the scores to list
         scores = list(scores.items())
 
-        return Output(scores, self._reliability_threshold, self._filter_threshold)
+        return Output(
+            scores, self._reliability_threshold, self._filter_threshold
+        ).predictions
 
     @property
     def supported_languages(self) -> dict:
