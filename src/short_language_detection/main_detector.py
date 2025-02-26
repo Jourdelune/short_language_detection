@@ -7,7 +7,7 @@ import unicodedata
 
 import emoji
 
-from .constants import FASTTEXT_WEIGHTS
+from .constants import FASTTEXT_WEIGHTS, LANGUAGES
 from .dict_detector import DictDetector
 from .fasttext_detector import FastTextDetector
 from .lingua_detector import LinguaDetector
@@ -123,5 +123,14 @@ class Detector:
         return Output(scores, self._reliability_threshold, self._filter_threshold)
 
     @property
-    def supported_languages(self):
-        return tuple(self._detectors_for_each_language.keys())
+    def supported_languages(self) -> dict:
+        """Returns the supported languages with their ISO 639-1 code.
+
+        Returns:
+            dict: The supported languages.
+        """
+
+        return {
+            lang: str(LANGUAGES.from_iso_code_639_1_str(lang))
+            for lang in self._detectors_for_each_language.keys()
+        }

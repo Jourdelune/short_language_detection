@@ -4,7 +4,7 @@ The output formater of the language detection.
 
 from typing import List, Tuple
 
-from .constants import TOP_LANGUAGES
+from .constants import LANGUAGES, TOP_LANGUAGES
 
 
 class Output:
@@ -89,7 +89,8 @@ class Output:
         for i, (lang, score) in enumerate(self._predictions):
             results.append(
                 {
-                    "language": lang,
+                    "language": str(LANGUAGES.from_iso_code_639_1_str(lang)),
+                    "code": str(LANGUAGES.from_iso_code_639_1_str(lang).iso_code_639_1),
                     "score": round(score, 2),
                     "prefered": i == 0 and score >= self._reliability_threshold,
                     "reliable": score >= self._reliability_threshold,
