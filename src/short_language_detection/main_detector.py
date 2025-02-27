@@ -73,6 +73,8 @@ class Detector:
         Returns:
             str: The cleaned text.
         """
+
+        text = text[:1000]  # limit the text to 1000 characters for performance reasons
         text = re.sub(
             r"[!\"#$%&\'()*+,\-.\/:;<=>?@\[\\\]^_`{|}~ ]{2,}",
             lambda match: match.group()[0] + (" " if " " in match.group() else ""),
