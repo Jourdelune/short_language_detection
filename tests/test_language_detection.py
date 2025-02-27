@@ -1,6 +1,8 @@
-from src.short_language_detection import Detector
-import pytest
 import random
+
+import pytest
+
+from src.short_language_detection import Detector
 
 
 @pytest.fixture
