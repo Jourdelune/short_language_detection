@@ -1,4 +1,4 @@
-""" 
+"""
 Main class to detect the language of a text.
 """
 

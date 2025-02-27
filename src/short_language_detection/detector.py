@@ -1,4 +1,4 @@
-""" 
+"""
 Abstract class for language detection
 """
 

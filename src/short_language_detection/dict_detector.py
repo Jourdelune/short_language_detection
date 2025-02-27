@@ -1,4 +1,4 @@
-""" 
+"""
 Language detector based on dictionaries
 """
 

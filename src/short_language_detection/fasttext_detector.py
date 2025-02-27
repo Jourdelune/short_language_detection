@@ -1,4 +1,4 @@
-""" 
+"""
 Language detection using FastText
 """
 

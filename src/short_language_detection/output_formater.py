@@ -1,4 +1,4 @@
-""" 
+"""
 The output formater of the language detection.
 """
 
