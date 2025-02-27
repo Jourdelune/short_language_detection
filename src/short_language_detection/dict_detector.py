@@ -28,7 +28,14 @@ class DictDetector(AbstractDetector):
                 file.read().split("\n")
             )  # using set for faster lookup
 
+    def _clean_text(self, text):
+        # remove punctuation and numbers
+        text = "".join([c for c in text if c.isalpha() or c == " "])
+        return text.lower()
+
     def detect(self, text):
+        text = self._clean_text(text)
+
         # split the string into words, can't use nltk because at this point we don't have know the language
         text = text.lower().split()
 
@@ -45,7 +52,9 @@ class DictDetector(AbstractDetector):
 
         # remove languages with score 0
         result = [
-            (lang, scores[lang] / len(text)) for lang in scores if scores[lang] != 0
+            (lang.lower(), scores[lang] / len(text))
+            for lang in scores
+            if scores[lang] != 0
         ]
 
         # sort the result by score
