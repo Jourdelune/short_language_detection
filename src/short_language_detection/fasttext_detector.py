@@ -31,7 +31,7 @@ class FastTextDetector(AbstractDetector):
         for i in range(len(preds[0])):
             predictions.append(
                 (
-                    preds[0][i][9:],  # Remove the "__label__" prefix
+                    preds[0][i][9:].lower(),  # Remove the "__label__" prefix
                     round(preds[1][i] * self._weighted_reliability, 2),
                 )
             )
