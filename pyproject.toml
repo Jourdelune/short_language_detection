@@ -1,6 +1,6 @@
 [project]
 name = "short-language-detection"
-version = "0.1.3"
+version = "0.1.4"
 description = "A simple language detection library for short texts."
 license = "MIT"
 readme = "README.md"
