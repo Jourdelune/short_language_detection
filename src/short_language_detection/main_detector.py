@@ -4,6 +4,7 @@ Main class to detect the language of a text.
 
 import re
 import unicodedata
+from typing import List
 
 import emoji
 
@@ -11,7 +12,7 @@ from .constants import FASTTEXT_WEIGHTS, LANGUAGES
 from .dict_detector import DictDetector
 from .fasttext_detector import FastTextDetector
 from .lingua_detector import LinguaDetector
-from .output_formater import Output
+from .output_formater import OutputFormater
 
 
 class Detector:
@@ -20,7 +21,7 @@ class Detector:
     def __init__(
         self,
         reliability_threshold: float = 0.35,
-        filter_threshold: float = 0.1,
+        filter_threshold: float = 0.3,
         equal_traitements: bool = False,
     ):
         """Initializes the Detector object.
@@ -56,6 +57,13 @@ class Detector:
 
                 self._detectors_for_each_language[lang] += 1
 
+        self._output_format = OutputFormater(
+            self._detectors_for_each_language,
+            self._reliability_threshold,
+            self._filter_threshold,
+            self._equal_traitements,
+        )
+
     def _clean_text(self, text: str) -> str:
         """Cleans the text by removing special characters, emojis, and numbers.
 
@@ -82,7 +90,7 @@ class Detector:
 
         return unicodedata.normalize("NFKC", text.replace("\n", ""))[:200]
 
-    def detect(self, text: str) -> Output:
+    def detect(self, text: str) -> List[dict[str, float, bool]]:
         """Detects the language of a text.
 
         Args:
@@ -93,6 +101,7 @@ class Detector:
         """
 
         text = self._clean_text(text)
+
         if text == "":
             return []
 
@@ -101,28 +110,12 @@ class Detector:
         # If the language is detected with a score of 1 from the dictionary detector, return it
         if len(predictions[0]) != 0:
             if predictions[0][0][1] == 1:
-                return Output(
-                    predictions[0], self._reliability_threshold, self._filter_threshold
-                ).predictions
+                return self._output_format.format_predictions(
+                    [predictions[0]],
+                    apply_end_score_normalization=False,  # because only one detector
+                )
 
-        scores = {}
-        for prediction in predictions:
-            for lang, score in prediction:
-                if lang not in scores:
-                    scores[lang] = 0
-                scores[lang] += score
-
-        # Normalize the scores by the number of detectors for each language
-        if self._equal_traitements:
-            for lang in scores:
-                scores[lang] /= max(1, self._detectors_for_each_language[lang] - 3)
-
-        # convert the scores to list
-        scores = list(scores.items())
-
-        return Output(
-            scores, self._reliability_threshold, self._filter_threshold
-        ).predictions
+        return self._output_format.format_predictions(predictions)
 
     @property
     def supported_languages(self) -> dict:
