@@ -63,3 +63,17 @@ def test_invalid_text(detector):
     text = "123"
     result = detector.detect(text)
     assert result == []
+
+
+def test_languages_list(detector):
+    languages = detector.supported_languages
+    assert languages["en"] == "ENGLISH"
+    assert languages["fr"] == "FRENCH"
+    assert languages["es"] == "SPANISH"
+    assert languages["pt"] == "PORTUGUESE"
+    assert languages["ro"] == "ROMANIAN"
+    assert languages["ru"] == "RUSSIAN"
+    assert languages["nl"] == "DUTCH"
+    assert languages["it"] == "ITALIAN"
+    assert languages["de"] == "GERMAN"
+    assert len(languages) == 132
