@@ -139,13 +139,15 @@ class OutputFormater:
 
         results = []
         for i, (lang, score) in enumerate(predictions):
+            score = float(score)  # avoid numpy float
+
             results.append(
                 {
                     "language": str(LANGUAGES.from_iso_code_639_1_str(lang)),
                     "code": str(LANGUAGES.from_iso_code_639_1_str(lang).iso_code_639_1),
                     "score": round(score, 2),
                     "prefered": i == 0 and score >= self._reliability_threshold,
-                    "reliable": float(score) >= self._reliability_threshold,
+                    "reliable": score >= self._reliability_threshold,
                 }
             )
 
