@@ -83,7 +83,7 @@ class Detector:
         text = re.sub(r"(\w)\1{2,}", r"\1\1", text)
         text = re.sub(r"\d+|\^", "", text)
 
-        s = "@#$<>[]*_-~&%+/§{}=\|:▬"
+        s = "@#$<>[]*_-~&%+/§{}=\\|:▬"
         for char in text:
             if char in s:
                 text = text.replace(char, "", 1)
