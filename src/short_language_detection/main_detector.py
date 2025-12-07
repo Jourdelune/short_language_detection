@@ -92,7 +92,7 @@ class Detector:
 
         return unicodedata.normalize("NFKC", text.replace("\n", ""))[:200]
 
-    def detect(self, text: str) -> List[dict[str, float, bool]]:
+    def detect(self, text: str) -> List[dict]:
         """Detects the language of a text.
 
         Args:
